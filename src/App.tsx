@@ -123,6 +123,21 @@ function App() {
         alert("Hibás adatok");
         throw new Error("Hibás adatok");
       }
+      fetchProducts();
+    } catch (error) {
+      throw new Error("Szerver hiba történt: " + error);
+    }
+  };
+
+  const deleteProduct = async (id: number) => {
+    try {
+      const res = await fetch(`http://localhost:3000/termekek/${id}`, {
+        method: "DELETE"
+      })
+      if (!res.ok) {
+        alert("Hibás adatok");
+        throw new Error("Hibás adatok");
+      }
       fetchProducts()
     } catch (error) {
       throw new Error("Szerver hiba történt: " + error);
@@ -249,7 +264,10 @@ function App() {
                 </Slider.Root>
               </Text>
               <Text>
-                <p style={{ cursor: "pointer" }} onClick={() => {}}>
+                <p
+                  style={{ cursor: "pointer" }}
+                  onClick={() => deleteProduct(product.id)}
+                >
                   🗑️
                 </p>
               </Text>
